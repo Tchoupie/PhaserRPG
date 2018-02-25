@@ -10,6 +10,7 @@ var firstState =
 		game.load.spritesheet('monsterIdle','assets/monstreIdle-Sheet.png',64,64,8);
 		game.load.spritesheet('player','assets/perso-Sheet.png',64,64,36);
 		game.load.bitmapFont('carrier_command', 'assets/carrier_command.png', 'assets/carrier_command.xml');
+		game.load.bitmapFont('gem', 'assets/gem.png', 'assets/gem.xml');
 	},
 
 	create : function()
@@ -51,9 +52,18 @@ var firstState =
 		//Camera
 		game.camera.follow(player);
 
-		//Texte 
+		//Texte
 		bmpText = game.add.bitmapText(monster.body.x-50,monster.body.y-50,'carrier_command','Coucou petite merde',5);
 		bmpText.visible = false;
+		bmpText.maxWidth = 400;
+
+		//Texte pour le dialogue
+		textX = 50;
+		textY = 400;
+		textDial = game.add.bitmapText(textX,textY,'gem','Salut petite merde, tu te demandes surement ce que tu fais ici',12);
+		textDial.fixedToCamera = true;
+		textDial.visible = false;
+		textDial.maxWidth = 300;
 
 		//Gestion des dialogues
 		isDialing = false;
@@ -151,6 +161,7 @@ var firstState =
 				{
 					this.blockInput(false);
 					isDialing = false;
+					textDial.visible = false;
 				}
 			}
 		}
@@ -171,18 +182,22 @@ var firstState =
 				switch(line)
 				{
 					case 1 : 
+						textDial.visible = true;
 						console.log('afficher dialogue 1 ligne 1');
+						textDial.text = 'Salut petite merde, tu te demandes surement ce que tu fais ici';
 						isDialing = true;
 						enter.enabled = true;
 						nbLineMonster++;
 						break;
 					case 2 :
 						console.log('afficher dialogue 1 ligne 2');
+						textDial.text = 'Ben moi non plus je sais pas';
 						enter.enabled = true;
 						nbLineMonster++;
 						break;
 					case 3 :
 						console.log('afficher dialogue 1 ligne 3');
+						textDial.text = 'Donc tu peux te casser';
 						enter.enabled = true;
 						nbLineMonster = 1;
 						break;
